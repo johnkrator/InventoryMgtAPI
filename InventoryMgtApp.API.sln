@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryMgtApp.API", "InventoryMgtApp.API\InventoryMgtApp.API.csproj", "{5A1AB2B2-8694-4ABC-AF5D-5C335F203367}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryMgtApp.BLL", "InventoryMgtApp.BLL\InventoryMgtApp.BLL.csproj", "{EF82456C-FCC4-4C51-BACE-5C5971EC9119}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryMgtApp.DAL", "InventoryMgtApp.DAL\InventoryMgtApp.DAL.csproj", "{B10BC79F-5FD9-4C75-A342-5E4B6AD56237}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A1AB2B2-8694-4ABC-AF5D-5C335F203367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1AB2B2-8694-4ABC-AF5D-5C335F203367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1AB2B2-8694-4ABC-AF5D-5C335F203367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1AB2B2-8694-4ABC-AF5D-5C335F203367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF82456C-FCC4-4C51-BACE-5C5971EC9119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF82456C-FCC4-4C51-BACE-5C5971EC9119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF82456C-FCC4-4C51-BACE-5C5971EC9119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF82456C-FCC4-4C51-BACE-5C5971EC9119}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B10BC79F-5FD9-4C75-A342-5E4B6AD56237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B10BC79F-5FD9-4C75-A342-5E4B6AD56237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B10BC79F-5FD9-4C75-A342-5E4B6AD56237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B10BC79F-5FD9-4C75-A342-5E4B6AD56237}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
