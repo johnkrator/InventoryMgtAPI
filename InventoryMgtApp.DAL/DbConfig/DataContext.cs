@@ -1,4 +1,5 @@
 using InventoryMgtApp.DAL.Entities.Models;
+using InventoryMgtApp.DAL.Entities.Token;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ public class DataContext : IdentityDbContext<AppUser>
     public DbSet<Product> Products { get; set; }
     public DbSet<Sale> Sales { get; set; }
     public DbSet<ProductSale> ProductSales { get; set; }
+    public DbSet<TokenInfo> TokenInfos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
