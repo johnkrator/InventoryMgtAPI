@@ -21,7 +21,7 @@ public class AuthController : ControllerBase
         var newUser = await _authService.UserRegisteration(model);
 
         if (newUser is null)
-            return StatusCode(StatusCodes.Status400BadRequest);
+            return BadRequest();
 
         return Ok(newUser);
     }
@@ -32,7 +32,7 @@ public class AuthController : ControllerBase
         var newAdmin = await _authService.AdminRegistration(model);
 
         if (newAdmin is null)
-            return StatusCode(StatusCodes.Status400BadRequest);
+            return BadRequest();
 
         return Ok(newAdmin);
     }
@@ -43,7 +43,7 @@ public class AuthController : ControllerBase
         var newSuperAdmin = await _authService.SuperAdminRegistration(model);
 
         if (newSuperAdmin is null)
-            return StatusCode(StatusCodes.Status400BadRequest);
+            return BadRequest();
 
         return Ok(newSuperAdmin);
     }
@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
         var login = await _authService.Login(model);
 
         if (login is null)
-            return StatusCode(StatusCodes.Status400BadRequest);
+            return BadRequest();
 
         return Ok(login);
     }
@@ -65,7 +65,7 @@ public class AuthController : ControllerBase
         var users = await _authService.GetUsers();
 
         if (users is null)
-            return StatusCode(StatusCodes.Status404NotFound);
+            NotFound();
 
         return Ok(users);
     }
@@ -76,36 +76,33 @@ public class AuthController : ControllerBase
         var user = await _authService.GetUser(id);
 
         if (user is null)
-            return StatusCode(StatusCodes.Status404NotFound);
+            return NotFound();
 
         return Ok(user);
     }
 
-    [HttpPost("UpdateUser")]
+    [HttpPut("UpdateUser")]
     public async Task<ActionResult> UpdateUser(string id, [FromBody] UpdateDto model)
     {
         if (!ModelState.IsValid)
-        {
             return BadRequest(ModelState);
-        }
 
         var result = await _authService.UpdateUser(id, model);
 
         if (!result)
-        {
             return NotFound();
-        }
+
 
         return NoContent();
     }
 
-    [HttpPost("DeleteUser")]
+    [HttpDelete("DeleteUser")]
     public async Task<ActionResult> DeleteUser(string id)
     {
         var deleteUser = await _authService.DeleteUser(id);
 
         if (deleteUser is null)
-            return StatusCode(StatusCodes.Status404NotFound);
+            return NotFound();
 
         return Ok(deleteUser);
     }
