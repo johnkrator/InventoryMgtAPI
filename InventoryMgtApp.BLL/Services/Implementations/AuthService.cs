@@ -336,14 +336,42 @@ public class AuthService : IAuthService
         return users;
     }
 
-    public async Task<AppUser> GetUser(string id)
+    public async Task<Status> GetUser(string id)
     {
+        var status = new Status();
         var user = await _userManager.FindByIdAsync(id);
 
-        if (user is null)
-            throw new NotFoundException(message: "User not found");
+        if (user == null)
+        {
+            status.StatusCode = 0;
+            status.Message = "User not found";
+            return status;
+        }
 
-        return user;
+        try
+        {
+            var userId = await _userManager.GetUserIdAsync(user);
+            status.StatusCode = 1;
+            status.Message = "User found successfully";
+            status.Data = new AppUser()
+            {
+                Email = user.Email,
+                FullName = user.FullName,
+                PhoneNumber = user.PhoneNumber,
+                DOB = user.DOB,
+                Address = user.Address,
+                PostalCode = user.PostalCode,
+                PasswordHash = user.PasswordHash,
+                UserName = user.UserName
+            };
+            return status;
+        }
+        catch (Exception ex)
+        {
+            status.StatusCode = 0;
+            status.Message = $"Error: {ex.Message}";
+            return status;
+        }
     }
 
     public async Task<bool> UpdateUser(string id, UpdateDto model)
