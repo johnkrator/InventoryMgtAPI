@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using InventoryMgtApp.BLL.Services.Contracts;
 using InventoryMgtApp.BLL.Services.Implementations;
@@ -83,6 +84,13 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork<DataContext>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+#endregion
+
+#region injecting auto mapper
+
+builder.Services.AddAutoMapper(Assembly.Load("InventoryMgtApp.BLL"));
 
 #endregion
 
