@@ -8,7 +8,6 @@ public interface IAuthService
 {
     Task<Status> UserRegisteration(RegistrationDto model);
     Task<Status> AdminRegistration(RegistrationDto model);
-    Task<Status> SuperAdminRegistration(RegistrationDto model);
     Task<LoginResponse> Login(LoginDto model);
     Task<Status> ChangePassword(ChangePasswordDto model);
     Task<List<AppUser>> GetUsers();

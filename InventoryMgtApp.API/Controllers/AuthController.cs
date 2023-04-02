@@ -37,17 +37,6 @@ public class AuthController : ControllerBase
         return Ok(newAdmin);
     }
 
-    [HttpPost("SuperAdminRegistration")]
-    public async Task<ActionResult> SuperAdminRegistration(RegistrationDto model)
-    {
-        var newSuperAdmin = await _authService.SuperAdminRegistration(model);
-
-        if (newSuperAdmin is null)
-            return BadRequest();
-
-        return Ok(newSuperAdmin);
-    }
-
     [HttpPost("GeneralLogin")]
     public async Task<ActionResult> Login(LoginDto model)
     {

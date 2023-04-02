@@ -10,6 +10,7 @@ using InventoryMgtApp.DAL.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace InventoryMgtApp.BLL.Services.Implementations;
 
 public class AuthService : IAuthService
@@ -154,67 +155,6 @@ public class AuthService : IAuthService
         return status;
     }
 
-    public async Task<Status> SuperAdminRegistration(RegistrationDto model)
-    {
-        var status = new Status();
-        if (string.IsNullOrEmpty(model.Fullname) || string.IsNullOrEmpty(model.Username) ||
-            string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.PhoneNumber) ||
-            string.IsNullOrEmpty(model.DOB.ToString()) || string.IsNullOrEmpty(model.Address) ||
-            string.IsNullOrEmpty(model.PostalCode) || string.IsNullOrEmpty(model.Password))
-        {
-            status.StatusCode = 0;
-            status.Message = "Please enter all required fields.";
-
-            return status;
-        }
-
-        // check if user exists
-        var userExist = await _userManager.FindByNameAsync(model.Username);
-        if (userExist != null)
-        {
-            status.StatusCode = 0;
-            status.Message = "Username already exists";
-
-            return status;
-        }
-
-        var user = new AppUser()
-        {
-            SecurityStamp = Guid.NewGuid().ToString(),
-            FullName = model.Fullname,
-            UserName = model.Username,
-            Email = model.Email,
-            PhoneNumber = model.PhoneNumber,
-            DOB = model.DOB,
-            Address = model.Address,
-            PostalCode = model.PostalCode
-        };
-
-        // create new user
-        var result = await _userManager.CreateAsync(user, model.Password);
-
-        if (!result.Succeeded)
-        {
-            status.StatusCode = 0;
-            status.Message = "New user creation failed";
-
-            return status;
-        }
-
-        // add roles
-        // for admin registration, make use of UserRole.Admin instead of UserRole.User
-        if (!await _roleManager.RoleExistsAsync(UserRole.SuperAdmin))
-            await _roleManager.CreateAsync(new IdentityRole(UserRole.SuperAdmin));
-
-        if (await _roleManager.RoleExistsAsync(UserRole.SuperAdmin))
-            await _userManager.AddToRoleAsync(user, UserRole.SuperAdmin);
-
-        status.StatusCode = 1;
-        status.Message = "Super-admin was registered successfully";
-
-        return status;
-    }
-
     public async Task<LoginResponse> Login(LoginDto model)
     {
         var user = await _userManager.FindByNameAsync(model.Username);
@@ -268,7 +208,8 @@ public class AuthService : IAuthService
                 RefreshToken = refreshToken,
                 Expiration = token.ValidTo,
                 StatusCode = 1,
-                Message = "Logged In"
+                Message = "Logged In",
+                Data = user.PasswordHash
             };
         }
 
