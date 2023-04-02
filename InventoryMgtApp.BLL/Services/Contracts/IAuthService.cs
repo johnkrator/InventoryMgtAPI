@@ -13,6 +13,6 @@ public interface IAuthService
     Task<Status> ChangePassword(ChangePasswordDto model);
     Task<List<AppUser>> GetUsers();
     Task<AppUser> GetUser(string id);
-    Task<Status> UpdateUser(string id, RegistrationDto registrationDto);
+    Task<bool> UpdateUser(string id, UpdateDto registrationDto);
     Task<Status> DeleteUser(string id);
 }

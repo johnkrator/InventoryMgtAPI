@@ -346,36 +346,23 @@ public class AuthService : IAuthService
         return user;
     }
 
-    public async Task<Status> UpdateUser(string id, RegistrationDto model)
+    public async Task<bool> UpdateUser(string id, UpdateDto model)
     {
-        var status = new Status();
         var user = await _userManager.FindByIdAsync(id);
 
         if (user == null)
-        {
-            status.StatusCode = 0;
-            status.Message = "User not found";
-            return status;
-        }
+            return false;
 
-        // user.FullName = model.FullName;
-        user.Email = model.Email;
+        user.FullName = model.Fullname;
+        user.UserName = model.Username;
         user.PhoneNumber = model.PhoneNumber;
+        user.DOB = model.DOB;
         user.Address = model.Address;
         user.PostalCode = model.PostalCode;
 
         var result = await _userManager.UpdateAsync(user);
 
-        if (!result.Succeeded)
-        {
-            status.StatusCode = 0;
-            status.Message = "User update failed";
-            return status;
-        }
-
-        status.StatusCode = 1;
-        status.Message = "User updated successfully";
-        return status;
+        return result.Succeeded;
     }
 
     public async Task<Status> DeleteUser(string id)

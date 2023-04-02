@@ -82,14 +82,21 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("UpdateUser")]
-    public async Task<ActionResult> UpdateUser(string id, RegistrationDto model)
+    public async Task<ActionResult> UpdateUser(string id, [FromBody] UpdateDto model)
     {
-        var updateUser = await _authService.UpdateUser(id, model);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
-        if (updateUser is null)
-            return StatusCode(StatusCodes.Status404NotFound);
+        var result = await _authService.UpdateUser(id, model);
 
-        return Ok(updateUser);
+        if (!result)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
     }
 
     [HttpPost("DeleteUser")]
