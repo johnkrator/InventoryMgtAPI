@@ -1,6 +1,6 @@
 using InventoryMgtApp.DAL.Enums;
 
-namespace InventoryMgtApp.DAL.Entities.DTOs;
+namespace InventoryMgtApp.DAL.Entities.DTOs.Requests;
 
 public class SaleDto
 {

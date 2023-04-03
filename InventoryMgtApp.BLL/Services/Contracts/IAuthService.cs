@@ -1,6 +1,7 @@
 using InventoryMgtApp.DAL.Entities.DTOs;
+using InventoryMgtApp.DAL.Entities.DTOs.Requests;
+using InventoryMgtApp.DAL.Entities.DTOs.Responses;
 using InventoryMgtApp.DAL.Entities.Models;
-using InventoryMgtApp.DAL.Entities.Responses;
 
 namespace InventoryMgtApp.BLL.Services.Contracts;
 

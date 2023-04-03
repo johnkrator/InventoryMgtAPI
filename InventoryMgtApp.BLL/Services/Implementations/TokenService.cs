@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using InventoryMgtApp.BLL.Services.Contracts;
+using InventoryMgtApp.DAL.Entities.DTOs.Responses;
 using InventoryMgtApp.DAL.Entities.Token;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

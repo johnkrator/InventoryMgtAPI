@@ -1,4 +1,4 @@
-namespace InventoryMgtApp.DAL.Entities.Token;
+namespace InventoryMgtApp.DAL.Entities.DTOs.Responses;
 
 public class TokenResponse
 {
