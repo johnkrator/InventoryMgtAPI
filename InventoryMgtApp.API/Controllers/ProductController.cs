@@ -82,4 +82,15 @@ public class ProductController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPost("ProductImageUpload")]
+    public async Task<IActionResult> ProductImageUpload(string id, IFormFile file)
+    {
+        var uploadProductImage = await _productService.ProductImageUpload(id, file);
+
+        if (uploadProductImage is null)
+            return BadRequest();
+
+        return Ok(uploadProductImage);
+    }
 }
