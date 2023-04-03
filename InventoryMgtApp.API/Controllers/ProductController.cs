@@ -1,5 +1,7 @@
 using InventoryMgtApp.BLL.Services.Contracts;
 using InventoryMgtApp.DAL.Entities.DTOs;
+using InventoryMgtApp.DAL.Entities.DTOs.Requests;
+using InventoryMgtApp.DAL.Entities.DTOs.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryMgtApp.API.Controllers;
@@ -27,7 +29,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("GetAllUserProducts")]
-    public async Task<ActionResult> GetAllUserProducts(string id)
+    public async Task<ActionResult> GetAllUserProducts(Guid id)
     {
         var getUserProducts = await _productService.GetAllUserProducts(id);
 
@@ -49,7 +51,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("GetProduct")]
-    public async Task<IActionResult> GetProduct(string id)
+    public async Task<IActionResult> GetProduct(Guid id)
     {
         var getProduct = await _productService.GetProduct(id);
 
@@ -60,7 +62,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPut("UpdateProduct")]
-    public async Task<IActionResult> UpdateProduct(string productId, ProductRequestDto productRequestDto)
+    public async Task<IActionResult> UpdateProduct(Guid productId, ProductRequestDto productRequestDto)
     {
         var updateProduct = await _productService.UpdateProduct(productId, productRequestDto);
 

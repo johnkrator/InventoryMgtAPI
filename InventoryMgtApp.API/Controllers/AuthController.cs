@@ -1,5 +1,6 @@
 using InventoryMgtApp.BLL.Services.Contracts;
 using InventoryMgtApp.DAL.Entities.DTOs;
+using InventoryMgtApp.DAL.Entities.DTOs.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryMgtApp.API.Controllers;

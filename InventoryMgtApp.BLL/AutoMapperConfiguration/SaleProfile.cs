@@ -1,5 +1,6 @@
 using AutoMapper;
 using InventoryMgtApp.DAL.Entities.DTOs;
+using InventoryMgtApp.DAL.Entities.DTOs.Requests;
 using InventoryMgtApp.DAL.Entities.Models;
 
 namespace InventoryMgtApp.BLL.AutoMapperConfiguration;

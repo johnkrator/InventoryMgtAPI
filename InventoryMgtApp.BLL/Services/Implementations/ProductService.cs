@@ -1,6 +1,7 @@
 using AutoMapper;
 using InventoryMgtApp.BLL.Services.Contracts;
-using InventoryMgtApp.DAL.Entities.DTOs;
+using InventoryMgtApp.DAL.Entities.DTOs.Requests;
+using InventoryMgtApp.DAL.Entities.DTOs.Responses;
 using InventoryMgtApp.DAL.Entities.Models;
 using InventoryMgtApp.DAL.Exceptions;
 using InventoryMgtApp.DAL.Repository.Contracts;
@@ -57,19 +58,19 @@ public class ProductService : IProductService
         return status;
     }
 
-    public async Task<IEnumerable<ProductResponseDto>> GetAllUserProducts(string id)
+    public async Task<IEnumerable<ProductResponseDto>> GetAllUserProducts(Guid id)
     {
-        var userExist = await _userManager.FindByIdAsync(id);
+        var userExist = await _userManager.FindByIdAsync(id.ToString());
 
         if (userExist is null)
             throw new NotFoundException("User not found");
 
-        var product = _productRepository.GetQueryable(x => x.AppUserId.ToString() == id);
+        var products = _productRepository.GetQueryable(x => x.AppUserId == id.ToString());
 
-        if (product is null)
+        if (products is null)
             throw new NotFoundException("Product not found");
 
-        var result = _mapper.Map<IEnumerable<ProductResponseDto>>(product);
+        var result = _mapper.Map<IEnumerable<ProductResponseDto>>(products);
 
         return result;
     }
@@ -82,19 +83,26 @@ public class ProductService : IProductService
         return result;
     }
 
-    public async Task<ProductResponseDto> GetProduct(string id)
+    public async Task<ProductResponseDto> GetProduct(Guid id)
     {
-        var product = await _productRepository.GetByIdAsync(id);
+        try
+        {
+            var product = await _productRepository.GetByIdAsync(id);
 
-        if (product is null)
-            throw new NotFoundException("Product not found");
+            if (product is null)
+                throw new NotFoundException("Product not found");
 
-        var result = _mapper.Map<ProductResponseDto>(product);
+            var result = _mapper.Map<ProductResponseDto>(product);
 
-        return result;
+            return result;
+        }
+        catch (NotFoundException e)
+        {
+            throw new NotFoundException(e.Message);
+        }
     }
 
-    public async Task<Status> UpdateProduct(string productId, ProductRequestDto productRequestDto)
+    public async Task<Status> UpdateProduct(Guid productId, ProductRequestDto productRequestDto)
     {
         var status = new Status();
 
