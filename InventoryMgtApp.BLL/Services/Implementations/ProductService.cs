@@ -5,6 +5,7 @@ using InventoryMgtApp.DAL.Entities.DTOs.Responses;
 using InventoryMgtApp.DAL.Entities.Models;
 using InventoryMgtApp.DAL.Exceptions;
 using InventoryMgtApp.DAL.Repository.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace InventoryMgtApp.BLL.Services.Implementations;
@@ -175,6 +176,56 @@ public class ProductService : IProductService
             status.StatusCode = 0;
             status.Message = $"An error occurred while deleting product with Id {productId}: {ex.Message}";
         }
+
+        return status;
+    }
+
+    public async Task<Status> ProductImageUpload(string id, IFormFile file)
+    {
+        var status = new Status();
+        var product = await _productRepository.GetSingleByAsync(x => x.ProductId.ToString() == id);
+
+        if (product is null)
+        {
+            status.StatusCode = 0;
+            status.Message = $"Product with id {id} was not found";
+
+            return status;
+        }
+
+        string path;
+
+        if (file.Length > 0)
+        {
+            path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "UploadedFiles"));
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            await using var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create);
+            await file.CopyToAsync(fileStream);
+
+            product.ProductImagePath = path + $"/{file.FileName}";
+
+            var updatedProduct = await _productRepository.UpdateAsync(product);
+
+            if (updatedProduct is null)
+            {
+                status.StatusCode = 0;
+                status.Message = "Unable to upload image";
+
+                return status;
+            }
+
+            status.StatusCode = 1;
+            status.Message = $"File {file.FileName} was uploaded successfully. Path: {path}";
+
+            return status;
+        }
+
+        status.StatusCode = 0;
+        status.Message = "Invalid file size";
 
         return status;
     }

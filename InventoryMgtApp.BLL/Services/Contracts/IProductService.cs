@@ -1,6 +1,6 @@
-using InventoryMgtApp.DAL.Entities.DTOs;
 using InventoryMgtApp.DAL.Entities.DTOs.Requests;
 using InventoryMgtApp.DAL.Entities.DTOs.Responses;
+using Microsoft.AspNetCore.Http;
 
 namespace InventoryMgtApp.BLL.Services.Contracts;
 
@@ -12,4 +12,5 @@ public interface IProductService
     Task<ProductResponseDto> GetProduct(Guid id);
     Task<Status> UpdateProduct(Guid productId, ProductRequestDto productRequestDto);
     Task<Status> DeleteProduct(Guid productId);
+    Task<Status> ProductImageUpload(string id, IFormFile file);
 }
